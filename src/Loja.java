@@ -1,16 +1,17 @@
 import exceptions.InvalidCategoryTypeException;
+import exceptions.InvalidMainOptionException;
 import exceptions.InvalidPriceValueException;
+import exceptions.ProductNotCreatedException;
 
 import java.util.Scanner;
 
 class Loja {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidMainOptionException{
 
         Sistema sistema = new Sistema();
         Scanner scanner = new Scanner(System.in);
         int opcao;
-
 
         do {
             System.out.println("Digite a opção desejada:");
@@ -21,6 +22,7 @@ class Loja {
             System.out.println("5 - Sair");
             opcao = scanner.nextInt();
             scanner.nextLine();
+
             try {
                 switch (opcao) {
                     case 1:
@@ -34,22 +36,31 @@ class Loja {
                         sistema.listar();
                         break;
                     case 3:
-                        sistema.buscar(scanner);
+                        try {
+                            sistema.buscar(scanner);
+                        } catch (ProductNotCreatedException e) {
+                            System.out.println(e.getMessage());
+                        }
+
                         break;
-                    case 4:
+                    case 4:try {
                         sistema.remover(scanner);
+                    } catch (ProductNotCreatedException e) {
+                        System.out.println(e.getMessage());
+                    }
                         break;
                     case 5:
                         break;
                     default:
-                        System.out.println("Opção inválida, tente novamente!");
+                        throw new InvalidMainOptionException("Opção inválida, tente novamente!");
                 }
-            } catch (Exception e) {
+            } catch (InvalidMainOptionException e) {
                 System.out.println(e.getMessage());
             }
         } while (opcao != 5);
 
         System.out.println("Saindo do Sistema!");
+
 
 
     }

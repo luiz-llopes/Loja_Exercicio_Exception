@@ -3,6 +3,7 @@ import entities.Movel;
 import entities.Produto;
 import exceptions.InvalidCategoryTypeException;
 import exceptions.InvalidPriceValueException;
+import exceptions.ProductNotCreatedException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
